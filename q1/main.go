@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"sort"
 	"strings"
 )
 
@@ -12,7 +13,7 @@ func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	var s string
-	var i, total, myPriority, myPriority_index int
+	var i,  myPriority, myPriority_index int
 	var myValue []int
 
 	var priority []int
@@ -36,37 +37,64 @@ func main() {
 		priority = append(priority, i)
 	}
 
-	total = myValue[0]
+	// total = myValue[0]
 	myPriority_index = myValue[1]
 	myPriority = priority[myPriority_index]
 
-	count := 1
+	// count := 1
+
 	max := 0
 	max_index := 0
-	for  i, e := range priority{
-		if max < e{
-			max = e
+
+
+
+	for i = 0; i < len(priority); i++{
+		if priority[i] > max{
+			max = priority[i]
 			max_index = i
 		}
 	}
 
-	for i = total -1; i >= max_index; i-- {
-		if i == myPriority_index{
-			continue
-		}else if priority[i] >= myPriority{
-			count ++
+	dub := 0
+	for i = 0; i < myPriority_index; i ++{
+		if i > max_index && priority[i] == myPriority{
+			dub ++
 		}
+	}
+	
+
+	pos := 0
+	if max != myPriority{
+		if myPriority_index > max_index{
+			for i = max_index+1; i < myPriority_index; i++{
+				if i != myPriority_index && priority[i] == myPriority{
+					pos ++
+				}
+			} 
+		}else {
+			for i = max_index+1; i < len(priority); i++{
+				if i != myPriority_index && priority[i] == myPriority{
+					pos ++
+				}
+			}
+		}
+	}
+	sort.Ints(priority)
+
+	i = myValue[0]-1
+	big := 0
+	// fmt.Println(priority[i])
+	for priority[i] > myPriority{
+		big ++
+		i --
 	}
 
-	for i = max_index-1; i >= 0; i--{
-		if priority[i] == myPriority{
-			if i < myPriority_index{
-				count ++
-			}
-		}else if priority[i] > myPriority{
-			count ++
-		}
-	}
+
+
+
+	count := 1 + big + dub + pos
+	fmt.Println(priority, myPriority)
+	fmt.Println(count,big, dub, pos)
 
 	fmt.Print(count*2)
 
