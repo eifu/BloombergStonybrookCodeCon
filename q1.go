@@ -9,37 +9,24 @@ import (
 	"strings"
 )
 
-func main() {
-	scanner := bufio.NewScanner(os.Stdin)
 
-	var s string
-	var i,  myPriority, myPriority_index int
+func takeValue(s string) []int{
+
 	var myValue []int
-
-	var priority []int
-
-	scanner.Scan()
-	s = scanner.Text()
 	arrays := strings.Split(s, " ")
 
 	for _, e := range arrays {
-		i, _ = strconv.Atoi(e)
+		i, _ := strconv.Atoi(e)
 		myValue = append(myValue, i)
 	}
+	return myValue
+}
 
-	scanner.Scan()
-	s = scanner.Text()
-	arrays = strings.Split(s, " ")	
-
-
-	for _, e := range arrays {
-		i, _ = strconv.Atoi(e)
-		priority = append(priority, i)
-	}
+func Solve(myValue, priority []int) int{
 
 	// total = myValue[0]
-	myPriority_index = myValue[1]
-	myPriority = priority[myPriority_index]
+	myPriority_index := myValue[1]
+	myPriority := priority[myPriority_index]
 
 	// count := 1
 
@@ -74,7 +61,7 @@ func main() {
 
 	sort.Ints(priority)
 
-	i = myValue[0]-1
+	i := myValue[0]-1
 	big := 0
 	// fmt.Println(priority[i])
 	for priority[i] > myPriority{
@@ -92,9 +79,28 @@ func main() {
 	// fmt.Println(priority, myPriority)
 	// fmt.Println(count,big, ind_in_same, aft_in_same)
 	if myPriority == max{
-		fmt.Print((ind_in_same+1)*2)
+		return (ind_in_same+1)*2
 	}else{
 
-		fmt.Print(count*2)
+		return count*2
 	}
+
+}
+
+func main() {
+	scanner := bufio.NewScanner(os.Stdin)
+
+	var s string
+	var myValue []int
+	var priority []int
+
+	scanner.Scan()
+	s = scanner.Text()
+	myValue = takeValue(s)
+
+	scanner.Scan()
+	s = scanner.Text()
+	priority = takeValue(s)
+
+	fmt.Print(Solve(myValue, priority))
 }
