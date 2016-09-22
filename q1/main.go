@@ -46,39 +46,32 @@ func main() {
 	max := 0
 	max_index := 0
 
-
-
-	for i = 0; i < len(priority); i++{
-		if priority[i] > max{
-			max = priority[i]
+	for i,e := range priority{
+		if e > max{
+			max = e
 			max_index = i
 		}
 	}
 
-	dub := 0
-	for i = 0; i < myPriority_index; i ++{
-		if i > max_index && priority[i] == myPriority{
-			dub ++
-		}
-	}
-	
-
-	pos := 0
-	if max != myPriority{
-		if myPriority_index > max_index{
-			for i = max_index+1; i < myPriority_index; i++{
-				if i != myPriority_index && priority[i] == myPriority{
-					pos ++
-				}
+	num_same := 0
+	ind_in_same := 0
+	bef_in_same := 0
+	aft_in_same := 0
+	for i, e := range priority{
+		if e == myPriority{
+			num_same ++
+			if i < myPriority_index{
+				ind_in_same ++
 			} 
-		}else {
-			for i = max_index+1; i < len(priority); i++{
-				if i != myPriority_index && priority[i] == myPriority{
-					pos ++
-				}
+			if i < max_index{
+				bef_in_same ++
 			}
+			if max_index < i {
+				aft_in_same ++
+			}	
 		}
 	}
+
 	sort.Ints(priority)
 
 	i = myValue[0]-1
@@ -89,13 +82,19 @@ func main() {
 		i --
 	}
 
+	if myPriority_index > max_index {
+		ind_in_same = ind_in_same - bef_in_same
+		aft_in_same = 0
+	} 
 
 
+	count := 1 + big + ind_in_same + aft_in_same
+	// fmt.Println(priority, myPriority)
+	// fmt.Println(count,big, ind_in_same, aft_in_same)
+	if myPriority == max{
+		fmt.Print((ind_in_same+1)*2)
+	}else{
 
-	count := 1 + big + dub + pos
-	fmt.Println(priority, myPriority)
-	fmt.Println(count,big, dub, pos)
-
-	fmt.Print(count*2)
-
+		fmt.Print(count*2)
+	}
 }
