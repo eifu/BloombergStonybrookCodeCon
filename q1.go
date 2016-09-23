@@ -22,9 +22,31 @@ func takeValue(s string) []int{
 	return myValue
 }
 
+type Node struct{
+	index int
+	priority int
+}
+
+type Queue struct{
+	size int
+	head *Node
+	tail *Node
+}
+
+func (q *Queue) enqueue(index, priority int){
+	q.size ++
+
+	n := 
+
+}
+
+func (q *Queue) dequeue(){
+
+}
+
 func Solve(myValue, priority []int) int{
 
-	// total = myValue[0]
+	total = myValue[0]
 	myPriority_index := myValue[1]
 	myPriority := priority[myPriority_index]
 
